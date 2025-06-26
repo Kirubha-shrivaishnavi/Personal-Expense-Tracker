@@ -1,0 +1,68 @@
+DROP DATABASE IF EXISTS PersonalExpenseDB;
+CREATE DATABASE PersonalExpenseDB;
+USE PersonalExpenseDB;
+
+CREATE TABLE Category (
+    CategoryID INT AUTO_INCREMENT PRIMARY KEY,
+    CategoryName VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE PaymentMethod (
+    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
+    MethodName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE User (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    UserName VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Transaction (
+    TransactionID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    Amount DECIMAL(10,2) NOT NULL,
+    Type ENUM('Income', 'Expense') NOT NULL,
+    CategoryID INT,
+    PaymentID INT,
+    Description TEXT,
+    TransactionDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES User(UserID),
+    FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID),
+    FOREIGN KEY (PaymentID) REFERENCES PaymentMethod(PaymentID)
+);
+
+INSERT INTO Category (CategoryName) VALUES 
+('Food'), ('Travel'), ('Bills'), ('Shopping'), ('Salary'), ('Health');
+
+INSERT INTO PaymentMethod (MethodName) VALUES 
+('Cash'), ('Credit Card'), ('Debit Card'), ('UPI'), ('Net Banking');
+
+INSERT INTO User (UserName) VALUES ('Shri');
+
+INSERT INTO Transaction (UserID, Amount, Type, CategoryID, PaymentID, Description)
+VALUES 
+(1, 150.00, 'Expense', 1, 1, 'Dinner at restaurant'),
+(1, 2000.00, 'Income', 5, 5, 'Monthly Salary'),
+(1, 500.00, 'Expense', 2, 3, 'Cab to office'),
+(1, 750.00, 'Expense', 4, 2, 'Clothes shopping'),
+(1, 300.00, 'Expense', 6, 1, 'Medicine'),
+(1, 100.00, 'Expense', 1, 4, 'Snacks'),
+(1, 250.00, 'Expense', 3, 2, 'Electricity Bill');
+
+SELECT * FROM Category;
+SELECT * FROM PaymentMethod;
+SELECT * FROM User;
+SELECT 
+    t.TransactionID, 
+    u.UserName, 
+    t.Amount, 
+    t.Type, 
+    c.CategoryName, 
+    p.MethodName, 
+    t.Description, 
+    t.TransactionDate
+FROM Transaction t
+JOIN User u ON t.UserID = u.UserID
+JOIN Category c ON t.CategoryID = c.CategoryID
+JOIN PaymentMethod p ON t.PaymentID = p.PaymentID
+ORDER BY t.TransactionDate DESC;
