@@ -17,20 +17,10 @@ A simple and responsive PHP & MySQL-based web application for tracking personal 
 ### Homepage
 ![Homepage](Screenshots/homepage.png)
 
-### Add Transaction
-![Add Transaction](Screenshots/add transaction.png)
-
-### Add Transaction - Category Selection
-![Add Transaction Category](Screenshots/add transaction (1).png)
-
-### Add Transaction - Payment Method
-![Add Transaction Payment](Screenshots/add transaction (2).png)
-
-### View Transactions
-![View Transactions](Screenshots/view transaction.png)
-
 ### Summary
 ![Summary](Screenshots/summary.png)
+
+📁 More screenshots available in the [Screenshots](Screenshots/) folder.
 
 ## Technologies Used
 
